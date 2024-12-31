@@ -36,13 +36,14 @@ const fetchData = ()=>{
 
 }
 const clearFields =()=>{
-    $('#id').val("");
+
     $('#name').val("");
     $('#address').val("");
 }
 
+
+
 fetchData()
-clearFields()
 
 $("#btnSave").click(()=>{
 

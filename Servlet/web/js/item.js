@@ -102,7 +102,7 @@ $('#btnSaveI').click(()=>{
 
         success:()=>{
             fetchItmData()
-            clearTXT()
+
 
 
             Swal.fire({
