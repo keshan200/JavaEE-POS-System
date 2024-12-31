@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>company</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+    <style>
+        .card{
+            width: 50vw;
+        }
+
+        .m-2{
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            flex-direction: row;
+        }
+
+        #Item,#op{
+            display: none;
+        }
+
+
+
+
+        .cart-table td, .cart-table th {
+            text-align: center;
+        }
+        .cart-table {
+            width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+        }
+        .cart-table th {
+            background-color: #f8f9fa;
+        }
+        .order-form {
+            margin-bottom: 30px;
+        }
+        .cart-table .remove-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+        }
+        .total-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .order-actions button {
+            width: 150px;
+        }
+
+
+        #orderForm{
+            width: 50vw;
+        }
+
+        #section{
+          display: flex;
+            justify-content: space-between;
+        }
+
+        .mt-5 {
+            margin-top: 1rem!important;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand">POS-System</a>
+
+
+        <ul class="nav justify-content-center">
+
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="customerNav">Customer</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" id="itemNav">Item</a>
+            </li>
+
+             <li>
+                 <a class="nav-link" href="#" id="orderBTN">Place-Order</a>
+             </li>
+
+
+        </ul>
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<!--customer Manage-->
+<div id="customer" class="container mt-5">
+    <h1 class="text-center">Customer Manage</h1>
+
+    <hr/>
+
+    <button type="button" class="btn btn-primary mb-3 text-right" data-bs-toggle="modal"
+            data-bs-target="#studentModal">
+        Add New student
+    </button>
+
+    <!--     add student modal-->
+    <div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="container m-2">
+                    <div class="card border-primary mb-3" style="max-width: 29rem;">
+                        <div class="card-header">Customer Manage</div>
+                        <div class="card-body text-primary">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="id" class="form-label">Customer ID</label>
+                                    <input type="text" class="form-control" id="id">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Customer Name</label>
+                                    <input type="text" class="form-control" id="name">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Customer Address</label>
+                                    <input type="text" class="form-control" id="address">
+                                </div>
+
+                                <button type="button" id="btnSave" class="btn btn-primary">Save</button>
+                                <button type="button" id="btnClear" class="btn btn-danger">Clear</button>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update student Modal -->
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="container m-2">
+                    <div class="card border-primary mb-3" style="max-width: 29rem;">
+                        <div class="card-header">Customer Manage</div>
+                        <div class="card-body text-primary">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="idU" class="form-label">Customer ID</label>
+                                    <input type="text" class="form-control" id="idU">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="nameU" class="form-label">Customer Name</label>
+                                    <input type="text" class="form-control" id="nameU">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="addressU" class="form-label">Customer Address</label>
+                                    <input type="text" class="form-control" id="addressU">
+                                </div>
+
+                                <button type="button" id="btnUpdate" class="btn btn-primary">Update</button>
+                                <button type="button" id="btnClearU" class="btn btn-danger">Clear</button>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <td>#ID</td>
+            <td>Name</td>
+            <td>Address</td>
+            <td>Actions</td>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
+</div>
+
+<!--Item Manage-->
+<div id="Item" class="container mt-5">
+    <h1 class="text-center">Item Manage</h1>
+
+    <hr/>
+
+    <button type="button" class="btn btn-primary mb-3 text-right" data-bs-toggle="modal"
+            data-bs-target="#ADDModel">
+        Add New Item
+    </button>
+
+    <!--     add  modal-->
+    <div class="modal fade" id="ADDModel" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="container m-2">
+                    <div class="card border-primary mb-3" style="max-width: 29rem;">
+                        <div class="card-header">Customer Manage</div>
+                        <div class="card-body text-primary">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="code" class="form-label">Item Code</label>
+                                    <input type="text" class="form-control" id="code">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="Iname" class="form-label">Item Name</label>
+                                    <input type="text" class="form-control" id="Iname">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="qty" class="form-label">Quantity on Hand</label>
+                                    <input type="number" class="form-control" id="qty">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="price" class="form-label">Unit Pricce</label>
+                                    <input type="number" class="form-control" id="price">
+                                </div>
+
+                                <button type="button" id="btnSaveI" class="btn btn-primary">Save</button>
+                                <button type="button" id="btnClearI" class="btn btn-danger">Clear</button>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update  Modal -->
+    <div class="modal fade" id="ItemupdateModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="container m-2">
+                    <div class="card border-primary mb-3" style="max-width: 29rem;">
+                        <div class="card-header">Customer Manage</div>
+                        <div class="card-body text-primary">
+                            <form>
+                                <div class="mb-3">
+                                    <label for="idIU" class="form-label">Item Code</label>
+                                    <input type="text" class="form-control" id="idIU">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="nameIU" class="form-label">Item Name</label>
+                                    <input type="text" class="form-control" id="nameIU">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="qtyIU" class="form-label">Quantity on Hand</label>
+                                    <input type="text" class="form-control" id="qtyIU">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="priceIU" class="form-label">Unit Price</label>
+                                    <input type="text" class="form-control" id="priceIU">
+                                </div>
+
+                                <button type="button" id="btnUpdateI" class="btn btn-primary">Update</button>
+                                <button type="button" id="btnClearUI" class="btn btn-danger">Clear</button>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <td>#Code</td>
+            <td>Description</td>
+            <td>Qty</td>
+            <td>Price</td>
+            <td>Actions</td>
+        </tr>
+        </thead>
+        <tbody id="tbodyI">
+
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Place Order Section -->
+<div id="op" class="container mt-5">
+    <h2 class="text-center mb-4">Place Your Order</h2>
+
+
+
+
+    <!-- Form for selecting Order ID, Item, and Customer -->
+    <section id="section" >
+        <form id="orderForm" class="row g-3" style="border: 1px solid blue;border-radius: 5px;padding: 5px">
+            <div class="col-md-6">
+                <label for="orderId" class="form-label">Order ID</label>
+                <input type="text" class="form-control" id="orderId">
+            </div>
+            <div class="col-md-6">
+                <label for="date" class="form-label">Date</label>
+                <input type="text" class="form-control" id="date" disabled>
+            </div>
+
+            <div class="col-md-6">
+                <label for="customerID" class="form-label">Customer ID</label>
+                <select  class="form-select" aria-label="Default select example" id="customerID">
+                    <option>Select Customer ID</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="cusName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="cusName" disabled>
+            </div>
+
+
+            <div class="col-md-6">
+                <label for="ItemName" class="form-label">Item Name</label>
+                <select  class="form-select" aria-label="Default select example" id="ItemName"></select>
+            </div>
+            <div class="col-md-4">
+                <label for="ItemCode" class="form-label">Item Code</label>
+                <input type="text" class="form-control" id="ItemCode" disabled>
+            </div>
+            <div class="col-md-4">
+                <label for="UPrice" class="form-label">Unit Price</label>
+                <input type="text" class="form-control" id="UPrice" disabled>
+            </div>
+            <div class="col-md-2">
+                <label for="QtyOnHand" class="form-label">Qty On Hand</label>
+                <input type="text" class="form-control" id="QtyOnHand" disabled>
+            </div>
+
+
+            <div class="input-group mb-3">
+                <input id="qtyo" type="text" class="form-control" placeholder="Quantity"  aria-describedby="button-addon2">
+                <button class="btn btn-primary" type="button" id="AddCart">Add Cart</button>
+            </div>
+        </form>
+
+
+        <section>
+            <div class="card border-primary mb-3" style="max-width: 24rem;">
+                <div class="card-header">Header</div>
+                <div class="card-body text-primary">
+
+
+                    <div class="">
+                        <label for="tot" class="form-label">Total Cost</label>
+                        <input id="tot" class="form-control">
+                    </div>
+
+
+                    <div class="text-center order-actions mt-4">
+                        <button type="button" class="btn btn-success" id="checkoutBtn">Checkout</button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </section>
+
+
+    <!-- Cart Table -->
+
+    <div class="table-responsive" id="table place" style="margin-top: 30px">
+        <table class="table table-striped text-center">
+            <thead>
+            <tr>
+                <th scope="col">Item Code</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Qty</th>
+                <th scope="col">Total</th>
+
+            </tr>
+            </thead>
+            <tbody id="cart">
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+</div>
+
+
+
+<script src="lib/jquery-3.7.1.min.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/orderss.js"></script>
+<script src="js/customer.js"></script>
+<script src="js/item.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+
+
+    $(document).ready(() => {
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        $('#date').val(formattedDate);
+    });
+
+    const fetchItemID = () => {
+        $.ajax({
+            url: "http://localhost:8080/Company/orderDetails",
+            method: "GET",
+
+            success: (res) => {
+                $('#ItemName').empty();
+                res.items.forEach((itm) => {
+                    let itemID = `<option>${itm.description}</option>`;
+                    $('#ItemName').append(itemID);
+                });
+            },
+            error: () => {
+                console.log("can't load Item IDs");
+                alert("Failed to load Item IDs");
+            }
+        });
+    };
+    const fetchCustomerId = () => {
+        $.ajax({
+            url: "http://localhost:8080/Company/orderDetails",
+            method: "GET",
+
+            success: (res) => {
+                $('#customerID').empty();
+                res.customers.forEach((cus) => {
+                    let dataID = `<option>${cus.id}</option>`;
+                    $('#customerID').append(dataID);
+                });
+            },
+
+            error: () => {
+                console.log("can't load Customer IDs");
+                alert("Failed to load Customer IDs");
+            }
+        });
+    };
+
+
+    $("#customerID").on('change', (e) =>{
+        let cusID=e.target.value;
+        $.ajax({
+            url: "http://localhost:8080/Company/cus",
+            method:"GET",
+            success: (response)=>{
+                let data = response;
+                for(let i=0;i<data.length;i++){
+                    if(cusID == data[i].id){
+                        $('#cusName').val(data[i].name);
+                    }
+                }
+            },
+            error:function (error){
+                console.log(error)
+                alert("cant show name")
+            }
+        })
+    })
+
+    $("#ItemName").on('change',(e)=>{
+        let name = e.target.value;
+
+        $.ajax({
+            url: "http://localhost:8080/Company/item",
+            method:"GET",
+            success:function (response){
+                let data=response;
+                for(let i=0;i<data.length;i++){
+                    if(name == data[i].description){
+                        $('#ItemCode').val(data[i].code);
+                        $('#UPrice').val(data[i].unitPrice);
+                        $('#QtyOnHand').val(data[i].qtyOnHand);
+                    }
+                }
+            },
+            error: function (error){
+                console.log(error);
+            }
+        })
+    })
+
+    fetchItemID();
+    fetchCustomerId();
+
+
+    $('#customerNav').click(()=>{
+        $('#customer').css('display','block');
+        $('#Item').css('display','none');
+        $('#op').css('display','none');
+    })
+
+    $('#itemNav').click(()=>{
+        $('#customer').css('display','none');
+        $('#Item').css('display','block');
+        $('#op').css('display','none');
+    })
+
+    $('#orderBTN').click(()=>{
+        $('#customer').css('display','none');
+        $('#Item').css('display','none');
+        $('#op').css('display','block');
+    })
+
+
+    let cart = [];
+    let tot = 0;
+
+    $('#AddCart').click(()=>{
+
+        let itemCode = $('#ItemCode').val();
+        let Iname = $('#ItemName').val();
+        let price = $('#UPrice').val()
+        let qty = $('#qtyo').val()
+        let total= qty * price;
+        tot= tot + total;
+
+        let dataObj = {itemCode,Iname,price,qty,total}
+        cart.push(dataObj);
+
+        console.log("clicked")
+        console.log(cart)
+        loadCartData()
+
+        $('#tot').val(tot);
+
+    })
+
+    function loadCartData(){
+        $('#cart').empty();
+
+        for(let i=0;i<cart.length;i++){
+
+            let data =
+                `<tr>
+                       <td>${cart[i].itemCode}</td>
+                       <td>${cart[i].Iname}</td>
+                       <td>${cart[i].price}</td>
+                       <td>${cart[i].qty}</td>
+                       <td>${cart[i].total}</td>
+                     </tr>`
+
+            $('#cart').append(data)
+
+        }
+    }
+
+    $('#checkoutBtn').click(()=>{
+
+        let orderID = $('#orderId').val();
+        let customerId = $('#customerID').val();
+        let date = $('#date').val();
+
+        $.ajax({
+            url:"http://localhost:8080/Company/orders",
+            method:"POST",
+
+            data:{
+                oid:orderID,
+                customerID:customerId,
+                date:date
+            },
+
+            success:(res)=>{
+                orderDetails(orderID);
+                    Swal.fire({
+                        title: "Order Completed!",
+                        icon: "success",
+                        draggable: true
+                    });
+            },
+
+            error:(err)=>{
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Can't Complete Order",
+                    footer: '<a href="#">Why do I have this issue?</a>'
+                });
+            }
+
+        })
+
+        console.log(customerId)
+    })
+
+    const orderDetails = (orderId)=>{
+        cart.forEach(element =>{
+            $.ajax({
+                url:'http://localhost:8080/Company/orderDetails',
+                method:'POST',
+                data:{
+                    oid:orderId,
+                    itemCode:element.itemCode
+                },
+                success: (response)=>{
+                    updateItemQty();
+                },
+                error: (error)=>{
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Can't update Item Qty",
+                        footer: '<a href="#">Why do I have this issue?</a>'
+                    });
+                }
+            })
+        })
+    }
+
+    const updateItemQty = ()=>{
+
+        let code = $('#ItemCode').val();
+        let qty = $('#qtyo').val();
+
+        $.ajax({
+            url:`http://localhost:8080/Company/orderDetails?code=${code}&qtyOnHand=${qty}`,
+            method:"PUT",
+            success:(res)=>{
+
+            },
+            error:(err)=>{
+                console.log("err")
+            }
+        })
+
+    }
+
+
+</script>
+</body>
+
+
+</html>
